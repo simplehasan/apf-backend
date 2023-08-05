@@ -56,6 +56,18 @@ export const createNewUser = async (req, res) => {
 }
 
 
+// Get specific user data
 export const getUser = async (req, res) => {
-    res.send("This is users route");
+    const user = await User.find({ _id: req.params.id });
+    if (user !== undefined) {
+        res.status(200).json({
+            status: "success",
+            message: user
+        })
+    } else {
+        res.status(404).json({
+            status: "error",
+            message: "Data not found"
+        })
+    }
 }
