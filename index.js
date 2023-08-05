@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import AppRoute from './routes/AppRoute.js'
 dotenv.config();
 
 
@@ -34,4 +35,5 @@ app.listen(PORT, () => {
     console.log(`Server is up and running on http://localhost:${PORT}`);
 });
 
+app.use(AppRoute);
 
