@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 const User = mongoose.Schema({
     name: {
@@ -14,6 +14,10 @@ const User = mongoose.Schema({
         type: String,
         required: true,
     },
+    whatsapp: {
+        type: Number,
+        required: true,
+    },
     role: {
         type: String,
         required: true,
@@ -21,7 +25,16 @@ const User = mongoose.Schema({
     },
     remember_token: {
         type: String,
-        default: uuid.v4(),
+        default: uuidv4(),
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    avatar: {
+        type: String,
+        required: false,
+        default: "",
     },
     created_at: {
         type: Date,

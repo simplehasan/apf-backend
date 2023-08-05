@@ -3,8 +3,14 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import AppRoute from './routes/AppRoute.js'
+import AppRoute from './routes/AppRoute.js';
+import cookieSession from 'cookie-session';
 dotenv.config();
+
+
+
+// import routers
+import userRoutes from './routes/UserRoutes.js';
 
 
 
@@ -30,10 +36,34 @@ db.once("open", () => {
 
 
 app.use(cors());
+
+// parse requests of content-type : application-json
 app.use(express.json());
+
+// parse requests of content-type : application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+
+// using Cookie Session
+app.use(
+    cookieSession({
+        name: "pln-session",
+        keys: [process.env.SECRET],
+        httpOnly: true,
+    })
+);
+
+
+// app routes
+app.use(AppRoute);
+
+
+
+// set port and listen for requests
 app.listen(PORT, () => {
     console.log(`Server is up and running on http://localhost:${PORT}`);
 });
 
-app.use(AppRoute);
+
+app.use("/api/users/", userRoutes);
+
 
